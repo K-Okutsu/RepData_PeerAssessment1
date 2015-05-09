@@ -13,26 +13,6 @@ output: html_document
 ```r
 library(knitr)
 library(dplyr)
-```
-
-```
-## Warning: package 'dplyr' was built under R version 3.1.3
-```
-
-```
-## 
-## Attaching package: 'dplyr'
-## 
-## The following object is masked from 'package:stats':
-## 
-##     filter
-## 
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union
-```
-
-```r
 setwd("C:/ko/coursea/DataScience/Reproducible Research/PA1")
 LoadData <- read.csv("activity.csv")
 ```
@@ -85,8 +65,8 @@ for(i in seq_along(x)){
     }
 x2 <- strptime(x2,format = "%H%M")  
 plot(x2,avg.steps$average_steps,type = "l",
-     xlab = "Time",ylab = "Average number of Steps", 
-     main = "Average number of steps (averaged across all days)")
+     xlab = "5-minute interval",ylab = "Average number of Steps", 
+     main = "Average number of steps taken (averaged across all days)")
 ```
 
 ![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png) 
@@ -139,7 +119,7 @@ new.steps.day <-
     NewData %>%
     group_by(date) %>%
     summarize(total_steps = sum(steps,na.rm=T))
-hist(new.steps.day$total_steps,xlab="steps",main="Total number of steps taken each day",col="blue")
+hist(new.steps.day$total_steps,xlab="steps",main="Total number of steps taken each day (missing values were imputed)",col="blue")
 ```
 
 ![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-1.png) 
@@ -198,20 +178,13 @@ NewData$weekend <- as.factor(NewData$weekend)
 
 ```r
 library(lattice)
-```
-
-```
-## Warning: package 'lattice' was built under R version 3.1.3
-```
-
-```r
 compare.steps <- 
     NewData[-2] %>%                         # drop date column
     group_by(interval,weekend) %>%
     summarize(average_steps = mean(steps,na.rm=T))
 xyplot(average_steps ~ as.integer(interval) | weekend, data=compare.steps
-       ,layout=c(1,2), type = 'l', xlab = "Interval", ylab = "Number of steps",
-       main = "Number of steps comparison between weekend & weekday")
+       ,layout=c(1,2), type = 'l', xlab = " 5-minute interval", ylab = "Average Number of steps",
+       main = "Average Number of steps comparison between weekend & weekday")
 ```
 
 ![plot of chunk unnamed-chunk-12](figure/unnamed-chunk-12-1.png) 

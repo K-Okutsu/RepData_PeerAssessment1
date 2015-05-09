@@ -58,8 +58,8 @@ for(i in seq_along(x)){
     }
 x2 <- strptime(x2,format = "%H%M")  
 plot(x2,avg.steps$average_steps,type = "l",
-     xlab = "Time",ylab = "Average number of Steps", 
-     main = "Average number of steps (averaged across all days)")
+     xlab = "5-minute interval",ylab = "Average number of Steps", 
+     main = "Average number of steps taken (averaged across all days)")
 ```
 
 2: Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
@@ -105,7 +105,7 @@ new.steps.day <-
     NewData %>%
     group_by(date) %>%
     summarize(total_steps = sum(steps,na.rm=T))
-hist(new.steps.day$total_steps,xlab="steps",main="Total number of steps taken each day",col="blue")
+hist(new.steps.day$total_steps,xlab="steps",main="Total number of steps taken each day (missing values were imputed)",col="blue")
 new.total_steps.mean <- mean(new.steps.day$total_steps)
 new.total_steps.median <- median(new.steps.day$total_steps)
 mean_differ <- new.total_steps.mean - total_mean
@@ -154,6 +154,6 @@ compare.steps <-
     group_by(interval,weekend) %>%
     summarize(average_steps = mean(steps,na.rm=T))
 xyplot(average_steps ~ as.integer(interval) | weekend, data=compare.steps
-       ,layout=c(1,2), type = 'l', xlab = "Interval", ylab = "Number of steps",
-       main = "Number of steps comparison between weekend & weekday")
+       ,layout=c(1,2), type = 'l', xlab = " 5-minute interval", ylab = "Average Number of steps",
+       main = "Average Number of steps comparison between weekend & weekday")
 ```
